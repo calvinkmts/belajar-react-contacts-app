@@ -1,53 +1,25 @@
 import React from "react";
-import ContactList from "./ContactList";
-import { getData } from "../utils/data";
-import ContactInput from "./ContactInput";
+import Navigation from "./Navigation.jsx";
+import HomePage from "../pages/HomePage.jsx";
+import AddPage from "../pages/AddPage.jsx";
+import {Route, Routes} from "react-router-dom";
 
-class ContactApp extends React.Component {
-    constructor(props) {
-        super(props);
+function ContactApp() {
 
-        this.state = {
-            contacts: getData(),
-        };
-
-        this.onDeleteHandler = this.onDeleteHandler.bind(this);
-        this.onAddContactHandler = this.onAddContactHandler.bind(this);
-    }
-
-
-    onDeleteHandler(id) {
-        const contacts = this.state.contacts.filter(contact => contact.id !== id);
-        this.setState({ contacts });
-    }
-
-    onAddContactHandler({ name, tag }) {
-        this.setState((prevState) => {
-            return {
-                contacts: [
-                    ...prevState.contacts,
-                    {
-                        id: +new Date(),
-                        name,
-                        tag,
-                        imageUrl: "/images/default.jpg",
-                    }
-                ]
-            }
-        });
-    }
-
-    render() {
-        return (
-            <div className="contact-app">
+    return (
+        <div className="contact-app">
+            <header className="contact-app__header">
                 <h1>Aplikasi Kontak</h1>
-                <h2>Tambah Kontak</h2>
-                <ContactInput addContact={this.onAddContactHandler} />
-                <h1>Daftar Kontak</h1>
-                <ContactList contacts={this.state.contacts} onDelete={this.onDeleteHandler} />
-            </div>
-        );
-    }    
+                <Navigation/>
+            </header>
+            <main>
+                <Routes>
+                    <Route path="/" element={<HomePage/>}/>
+                    <Route path="/add" element={<AddPage/>}/>
+                </Routes>
+            </main>
+        </div>
+    );
 }
 
 export default ContactApp;
