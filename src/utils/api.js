@@ -57,7 +57,7 @@ async function register({ name, email, password }) {
 }
 
 async function getUserLogged() {
-    const response = await fetchWithToken(`${BASE_URL}/user`);
+    const response = await fetchWithToken(`${BASE_URL}/users/me`);
 
     const responseJson = await response.json();
 
